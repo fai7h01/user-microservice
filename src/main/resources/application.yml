@@ -9,11 +9,9 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/user-db
     username: postgres
-    password: admin
+    password: faith
     driver-class-name: org.postgresql.Driver
-  sql:
-    init:
-      mode: always
+    initialization-mode: always
 
 server:
   port: 8081
