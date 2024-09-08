@@ -144,7 +144,7 @@ public class UserServiceImpl implements UserService {
         //TODO Get the needed information from project-service
         Integer projectCount;
 
-        ResponseEntity<ProjectResponse> projectResponse = projectClient.getNonCompletedCountByAssignedManager(username);
+        ResponseEntity<ProjectResponse> projectResponse = projectClient.getNonCompletedCountByAssignedManager(keycloakService.getAccessToken(),username);
 
         if (Objects.requireNonNull(projectResponse.getBody()).isSuccess()) {
             projectCount = projectResponse.getBody().getData();
