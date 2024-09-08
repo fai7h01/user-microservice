@@ -144,7 +144,7 @@ public class UserServiceImpl implements UserService {
         //TODO Get the needed information from project-service
         Integer projectCount;
 
-        ResponseEntity<ProjectResponse> projectResponse = projectClient.getNonCompletedCountByAssignedManager(keycloakService.getAccessToken(),username);
+        ResponseEntity<ProjectResponse> projectResponse = projectClient.getNonCompletedCountByAssignedManager(keycloakService.getAccessToken(), username);
 
         if (Objects.requireNonNull(projectResponse.getBody()).isSuccess()) {
             projectCount = projectResponse.getBody().getData();
@@ -163,7 +163,7 @@ public class UserServiceImpl implements UserService {
         //TODO Get the needed information from task-service
         Integer taskCount;
 
-        ResponseEntity<TaskResponse> taskResponse = taskClient.getNonCompletedCountByAssignedEmployee(username);
+        ResponseEntity<TaskResponse> taskResponse = taskClient.getNonCompletedCountByAssignedEmployee(keycloakService.getAccessToken(), username);
 
         if (Objects.requireNonNull(taskResponse.getBody()).isSuccess()) {
             taskCount = taskResponse.getBody().getData();
