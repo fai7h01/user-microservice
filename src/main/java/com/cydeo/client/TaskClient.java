@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface TaskClient {
 
     @GetMapping("/api/v1/task/count/employee/{assignedEmployee}")
-    ResponseEntity<TaskResponse> getNonCompletedCountByAssignedEmployee(@RequestHeader(value = "authorization") String authorizationHeader,
-                                                                        @PathVariable("assignedEmployee") String assignedEmployee);
+    ResponseEntity<TaskResponse> getNonCompletedCountByAssignedEmployee(@PathVariable("assignedEmployee") String assignedEmployee);
 
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface ProjectClient {
 
     @GetMapping("/api/v1/project/count/manager/{assignedManager}")
-    ResponseEntity<ProjectResponse> getNonCompletedCountByAssignedManager(@RequestHeader(value = "authorization") String authorizationHeader,
-                                                                          @PathVariable("assignedManager") String assignedManager);
+    ResponseEntity<ProjectResponse> getNonCompletedCountByAssignedManager(@PathVariable("assignedManager") String assignedManager);
 
 }
