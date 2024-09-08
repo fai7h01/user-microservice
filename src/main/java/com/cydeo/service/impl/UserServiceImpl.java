@@ -1,13 +1,12 @@
 package com.cydeo.service.impl;
 
 import com.cydeo.client.ProjectClient;
+import com.cydeo.client.TaskClient;
 import com.cydeo.dto.ProjectResponse;
+import com.cydeo.dto.TaskResponse;
 import com.cydeo.dto.UserDTO;
 import com.cydeo.entity.User;
-import com.cydeo.exception.ProjectCountNotRetrievedException;
-import com.cydeo.exception.UserAlreadyExistsException;
-import com.cydeo.exception.UserCanNotBeDeletedException;
-import com.cydeo.exception.UserNotFoundException;
+import com.cydeo.exception.*;
 import com.cydeo.repository.UserRepository;
 import com.cydeo.service.KeycloakService;
 import com.cydeo.service.UserService;
@@ -28,13 +27,16 @@ public class UserServiceImpl implements UserService {
     private final MapperUtil mapperUtil;
     private final KeycloakService keycloakService;
     private final ProjectClient projectClient;
+    private final TaskClient taskClient;
 
     public UserServiceImpl(UserRepository userRepository, MapperUtil mapperUtil,
-                           KeycloakService keycloakService, ProjectClient projectClient) {
+                           KeycloakService keycloakService, ProjectClient projectClient,
+                           TaskClient taskClient) {
         this.userRepository = userRepository;
         this.mapperUtil = mapperUtil;
         this.keycloakService = keycloakService;
         this.projectClient = projectClient;
+        this.taskClient = taskClient;
     }
 
     @Override
@@ -140,7 +142,8 @@ public class UserServiceImpl implements UserService {
     private void checkManagerConnections(String username) {
 
         //TODO Get the needed information from project-service
-        Integer projectCount = 0;
+        Integer projectCount;
+
         ResponseEntity<ProjectResponse> projectResponse = projectClient.getNonCompletedCountByAssignedManager(username);
 
         if (Objects.requireNonNull(projectResponse.getBody()).isSuccess()) {
@@ -149,8 +152,8 @@ public class UserServiceImpl implements UserService {
             throw new ProjectCountNotRetrievedException("Project count cannot be retrieved.");
         }
 
-        if (projectCount > 0){
-            throw new UserCanNotBeDeletedException("User cannot be delete. User is linked to project(s)");
+        if (projectCount > 0) {
+            throw new UserCanNotBeDeletedException("User cannot be deleted. User is linked to project(s).");
         }
 
     }
@@ -158,6 +161,19 @@ public class UserServiceImpl implements UserService {
     private void checkEmployeeConnections(String username) {
 
         //TODO Get the needed information from task-service
+        Integer taskCount;
+
+        ResponseEntity<TaskResponse> taskResponse = taskClient.getNonCompletedCountByAssignedEmployee(username);
+
+        if (Objects.requireNonNull(taskResponse.getBody()).isSuccess()) {
+            taskCount = taskResponse.getBody().getData();
+        } else {
+            throw new TaskCountNotRetrievedException("Task count cannot be retrieved.");
+        }
+
+        if (taskCount > 0) {
+            throw new UserCanNotBeDeletedException("User cannot be deleted. User is linked to task(s).");
+        }
 
     }
 
