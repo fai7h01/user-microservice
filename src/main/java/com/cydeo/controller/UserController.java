@@ -12,8 +12,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +20,6 @@ import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.List;
 
-@RefreshScope
-@CrossOrigin(origins = "http://localhost:8762")
 @RestController
 @RequestMapping("/api/v1/user")
 @Tag(name = "UserController", description = "User controller endpoints")
@@ -33,14 +29,6 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
-    }
-
-    @Value("${demo.config}")
-    public String demoConfig;
-
-    @GetMapping("/demo")
-    public String demo() {
-        return demoConfig;
     }
 
     @RolesAllowed("Admin")
