@@ -22,7 +22,7 @@ keycloak:
   ssl-required: none
   resource: ticketing-app
   credentials:
-    secret: yBoinzPIKLwo6dcsS3tvfRBmX8lZfUmn
+    secret: SXIvIL7Ze5DGsFrvnkVCsubZckxqb7Ee
   use-resource-role-mappings: true
   bearer-only: true
 
