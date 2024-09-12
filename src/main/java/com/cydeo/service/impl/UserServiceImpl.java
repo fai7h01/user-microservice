@@ -141,7 +141,6 @@ public class UserServiceImpl implements UserService {
 
     private void checkManagerConnections(String username) {
 
-        //TODO Get the needed information from project-service
         Integer projectCount;
 
         ResponseEntity<ProjectResponse> projectResponse = projectClient.getNonCompletedCountByAssignedManager(username);
@@ -160,7 +159,6 @@ public class UserServiceImpl implements UserService {
 
     private void checkEmployeeConnections(String username) {
 
-        //TODO Get the needed information from task-service
         Integer taskCount;
 
         ResponseEntity<TaskResponse> taskResponse = taskClient.getNonCompletedCountByAssignedEmployee(username);
@@ -177,6 +175,5 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    //TODO Extract the authorization token from the original request and add it to the request sent to next microservice
 
 }
