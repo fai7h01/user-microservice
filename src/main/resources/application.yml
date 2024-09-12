@@ -57,5 +57,5 @@ management:
 
 info:
   application:
-    name: user-microservice
+    name: user-service
     description: Ticketing Application User Service
